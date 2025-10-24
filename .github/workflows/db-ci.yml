@@ -15,7 +15,7 @@ jobs:
 
       - name: Execute SQL scripts
         env:
-          SQLPW: ${{ secrets.SQLPW }} #Load the github secret into an environment  
+          SQLPW: ${{ secrets.SA_PASSWORD }} #Load the github secret into an environment  
         run: |
           echo "Running SQL scripts..."
           for f in sql/*.sql; do
