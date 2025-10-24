@@ -15,10 +15,10 @@ jobs:
 
       - name: Execute SQL scripts
         env:
-          SQLPW: ${{ secrets.SA_PASSWORD }} #Load the github secret into an environment  
+          SA_PASSWORD: ${{ secrets.SA_PASSWORD }} #Load the github secret into an environment  
         run: |
           echo "Running SQL scripts..."
           for f in sql/*.sql; do
             echo "Executing $f"
-            /opt/mssql-tools18/bin/sqlcmd -S localhost.localdomain -U sa -P "$SQLPW" -C -i "$f"
+            /opt/mssql-tools18/bin/sqlcmd -S localhost.localdomain -U sa -P "$SA_PASSWORD" -C -i "$f"
           done
