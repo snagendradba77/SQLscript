@@ -36,6 +36,6 @@ jobs:
                  -locations="filesystem:sql" \
                  -baselineOnMigrate=true \
                  -flyway.baselineVersion=1 \            
-                 -flyway.baselineDescription=Existing schema \
+                 -flyway.baselineDescription="Existing schema" \
                  migrate
 
