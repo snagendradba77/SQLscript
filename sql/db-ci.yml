@@ -1,0 +1,39 @@
+name: Database CI/CD (Flyway)
+
+on:
+  push:
+    paths:
+      - 'sql/**'  # Trigger when anything in sql/ changes
+
+jobs:
+  run-flyway-migrations:
+    runs-on: self-hosted  # You’re using your Red Hat server as the runner
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Flyway (if not installed already)
+        run: |
+          if ! command -v flyway &> /dev/null; then
+            echo "Installing Flyway..."
+            curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/10.3.0/flyway-commandline-10.3.0-linux-x64.tar.gz -o flyway.tar.gz
+            tar -xzf flyway.tar.gz
+            sudo ln -s $PWD/flyway-10.3.0/flyway /usr/local/bin/flyway
+          else
+            echo "Flyway already installed."
+          fi
+
+      - name: Run Flyway Migrations
+        env:
+          DB_USER: sa
+          DB_PASSWORD: ${{ secrets.SA_PASSWORD }}
+        run: |
+          echo "Running Flyway migrations..."
+          flyway -url="jdbc:sqlserver://localhost.localdomain:1433;databaseName=Naga;encrypt=true;trustServerCertificate=true" \
+                 -user="${DB_USER}" \
+                 -password="${DB_PASSWORD}" \
+                 -locations="filesystem:sql" \
+                 -baselineOnMigrate=true \
+                 migrate
+
