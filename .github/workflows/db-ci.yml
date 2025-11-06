@@ -33,7 +33,7 @@ jobs:
           flyway -url="jdbc:sqlserver://localhost.localdomain:1433;databaseName=Naga;encrypt=true;trustServerCertificate=true" \
                  -user="${DB_USER}" \
                  -password="${DB_PASSWORD}" \
-                 -locations="filesystem:sql" \
+                 -locations="filesystem:\SQLscript\sql" \
                  -baselineOnMigrate=true \
                  migrate
 
