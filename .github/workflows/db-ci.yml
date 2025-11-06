@@ -34,8 +34,8 @@ jobs:
                  -user="${DB_USER}" \
                  -password="${DB_PASSWORD}" \
                  -locations="filesystem:sql" \
-                 -flyway.baselineVersion=1 \            
                  -baselineOnMigrate=true \
+                 -flyway.baselineVersion=1 \            
                  -flyway.baselineDescription=Existing schema \
                  migrate
 
